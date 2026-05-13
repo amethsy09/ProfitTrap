@@ -1,0 +1,88 @@
+<div class="p-6 bg-gray-100 min-h-screen">
+
+  <div class="bg-white shadow-lg rounded-2xl overflow-hidden">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between p-5 border-b">
+      <h2 class="text-2xl font-bold text-gray-800">
+        Liste des {{ title }}
+      </h2>
+
+      <button
+        class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-lg transition"
+      >
+        Ajouter
+      </button>
+    </div>
+
+    <!-- 🔍 Barre de recherche -->
+    <div class="p-5 border-b bg-gray-50">
+      <input
+        type="text"
+        placeholder="Rechercher un adhérent..."
+        class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+        [(ngModel)]="searchText"
+      />
+    </div>
+
+    <!-- Table -->
+    <div class="overflow-x-auto">
+
+      <table class="w-full text-left border-collapse">
+
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-4 text-sm font-semibold text-gray-600">ID</th>
+            <th class="px-6 py-4 text-sm font-semibold text-gray-600">Nom complet</th>
+            <th class="px-6 py-4 text-sm font-semibold text-gray-600">Email</th>
+            <th class="px-6 py-4 text-sm font-semibold text-gray-600">Téléphone</th>
+            <th class="px-6 py-4 text-sm font-semibold text-gray-600">Statut</th>
+            <th class="px-6 py-4 text-sm font-semibold text-gray-600">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          @for (item of filteredAdherants; track item.id) {
+            <tr class="border-b hover:bg-gray-50 transition">
+
+              <td class="px-6 py-4">{{ item.id }}</td>
+
+              <td class="px-6 py-4 font-medium text-gray-800">
+                {{ item.Nomcomplet }}
+              </td>
+
+              <td class="px-6 py-4 text-gray-600">
+                {{ item.email }}
+              </td>
+
+              <td class="px-6 py-4 text-gray-600">
+                {{ item.telehone }}
+              </td>
+
+              <td class="px-6 py-4">
+                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
+                  {{ item.statut }}
+                </span>
+              </td>
+
+              <td class="px-6 py-4 flex gap-3">
+                <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm">
+                  Modifier
+                </button>
+
+                <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm">
+                  Supprimer
+                </button>
+              </td>
+
+            </tr>
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+  </div>
+</div>

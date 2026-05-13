@@ -1,0 +1,106 @@
+<div class="min-h-screen bg-gray-100 p-6">
+
+  <!-- Titre -->
+  <div class="mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Dashboard</h1>
+    <p class="text-gray-500">Vue globale des statistiques</p>
+  </div>
+
+  <!-- Cards statistiques -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+
+    <div class="bg-white rounded-2xl shadow p-6">
+      <p class="text-gray-500 text-sm">Adhérents</p>
+      <h2 class="text-3xl font-bold text-gray-800 mt-2">1 245</h2>
+      <p class="text-green-600 text-sm mt-2">+12% ce mois</p>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow p-6">
+      <p class="text-gray-500 text-sm">Cotisations</p>
+      <h2 class="text-3xl font-bold text-gray-800 mt-2">850 000 FCFA</h2>
+      <p class="text-green-600 text-sm mt-2">+8% ce mois</p>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow p-6">
+      <p class="text-gray-500 text-sm">Événements</p>
+      <h2 class="text-3xl font-bold text-gray-800 mt-2">24</h2>
+      <p class="text-blue-600 text-sm mt-2">6 à venir</p>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow p-6">
+      <p class="text-gray-500 text-sm">Demandes</p>
+      <h2 class="text-3xl font-bold text-gray-800 mt-2">38</h2>
+      <p class="text-red-600 text-sm mt-2">5 en attente</p>
+    </div>
+
+  </div>
+
+  <!-- Graphiques fictifs -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+    <div class="bg-white rounded-2xl shadow p-6">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">
+        Évolution des adhérents
+      </h2>
+
+      <div class="flex items-end gap-4 h-64">
+        <div class="bg-pink-500 w-full rounded-t-lg h-24"></div>
+        <div class="bg-pink-500 w-full rounded-t-lg h-32"></div>
+        <div class="bg-pink-500 w-full rounded-t-lg h-40"></div>
+        <div class="bg-pink-500 w-full rounded-t-lg h-28"></div>
+        <div class="bg-pink-500 w-full rounded-t-lg h-52"></div>
+        <div class="bg-pink-500 w-full rounded-t-lg h-44"></div>
+      </div>
+
+      <div class="flex justify-between text-sm text-gray-500 mt-3">
+        <span>Jan</span>
+        <span>Fév</span>
+        <span>Mar</span>
+        <span>Avr</span>
+        <span>Mai</span>
+        <span>Juin</span>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow p-6">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">
+        Répartition des statuts
+      </h2>
+
+      <div class="space-y-5">
+
+        <div>
+          <div class="flex justify-between mb-1">
+            <span class="text-gray-600">Actifs</span>
+            <span class="font-semibold">70%</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-3">
+            <div class="bg-green-500 h-3 rounded-full w-[70%]"></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex justify-between mb-1">
+            <span class="text-gray-600">En attente</span>
+            <span class="font-semibold">20%</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-3">
+            <div class="bg-yellow-500 h-3 rounded-full w-[20%]"></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex justify-between mb-1">
+            <span class="text-gray-600">Suspendus</span>
+            <span class="font-semibold">10%</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-3">
+            <div class="bg-red-500 h-3 rounded-full w-[10%]"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
