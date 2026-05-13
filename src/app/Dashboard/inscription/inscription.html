@@ -1,0 +1,87 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+
+  <div class="w-full max-w-md bg-white p-6 rounded-xl shadow-md">
+
+    <h2 class="text-2xl font-bold text-center mb-6">
+      Inscription membre
+    </h2>
+
+    <form [formGroup]="inscriptionForm" (ngSubmit)="onSubmit()" class="space-y-4">
+
+      <!-- NOM -->
+      <div>
+        <label class="block text-sm font-medium">Nom</label>
+        <input
+          type="text"
+          formControlName="nom"
+          class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+        />
+
+        @if (inscriptionForm.get('nom')?.touched && inscriptionForm.get('nom')?.invalid) {
+          <p class="text-red-500 text-sm">Nom obligatoire</p>
+        }
+      </div>
+
+      <!-- PRENOM -->
+      <div>
+        <label class="block text-sm font-medium">Prénom</label>
+        <input
+          type="text"
+          formControlName="prenom"
+          class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+        />
+
+        @if (inscriptionForm.get('prenom')?.touched && inscriptionForm.get('prenom')?.invalid) {
+          <p class="text-red-500 text-sm">Prénom obligatoire</p>
+        }
+      </div>
+
+      <!-- EMAIL -->
+      <div>
+        <label class="block text-sm font-medium">Email</label>
+        <input
+          type="email"
+          formControlName="email"
+          class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+        />
+
+        @if (inscriptionForm.get('email')?.touched && inscriptionForm.get('email')?.hasError('required')) {
+          <p class="text-red-500 text-sm">Email obligatoire</p>
+        }
+
+        @if (inscriptionForm.get('email')?.touched && inscriptionForm.get('email')?.hasError('email')) {
+          <p class="text-red-500 text-sm">Email invalide</p>
+        }
+      </div>
+
+      <!-- AGE -->
+      <div>
+        <label class="block text-sm font-medium">Âge</label>
+        <input
+          type="number"
+          formControlName="age"
+          class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+        />
+
+        @if (inscriptionForm.get('age')?.touched && inscriptionForm.get('age')?.hasError('required')) {
+          <p class="text-red-500 text-sm">Âge obligatoire</p>
+        }
+
+        @if (inscriptionForm.get('age')?.touched && inscriptionForm.get('age')?.hasError('min')) {
+          <p class="text-red-500 text-sm">Vous devez avoir plus de 18 ans</p>
+        }
+      </div>
+
+      <!-- BUTTON -->
+      <button
+        type="submit"
+        class="w-full bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition"
+      >
+        S'inscrire
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
