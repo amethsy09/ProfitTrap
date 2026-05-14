@@ -4,6 +4,7 @@ import { Adherant } from './Dashboard/adherant/adherant';
 import { App } from './app';
 import { PlannignReservation } from './Dashboard/plannign-reservation/plannign-reservation';
 import { InscriptionComponent } from './Dashboard/inscription/inscription';
+import { PremiumComponent } from './Dashboard/premium/premium';
 
 export const routes: Routes = [
  
@@ -22,8 +23,11 @@ component:PlannignReservation
 {
 path:'inscription',
 component:InscriptionComponent
-}
-,
+},
+{
+path:'premium',
+component:PremiumComponent
+},
 {
 path:'',
 redirectTo:'dashboard',
