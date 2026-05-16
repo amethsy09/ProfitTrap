@@ -29,7 +29,7 @@ export class InscriptionComponent {
 
       age: [
         '',
-        [Validators.required, Validators.min(18)]
+        [Validators.required, Validators.min(16)]
       ]
     });
 

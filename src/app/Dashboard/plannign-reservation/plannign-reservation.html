@@ -1,48 +1,363 @@
-<div class="p-6 bg-gray-100 min-h-screen">
-
-  <h2 class="text-2xl font-bold mb-6">
-    Planning des cours
-  </h2>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-    @for (cours of coursAvecStatut(); track cours.id) {
-
-      <div class="bg-white p-5 rounded-xl shadow">
-
-        <!-- Nom -->
-        <h3 class="text-xl font-bold text-gray-800">
-          {{ cours.nom }}
-        </h3>
-
-        <!-- Places -->
-        <p class="text-gray-600 mt-2">
-          Réservé : {{ cours.reserves }} / {{ cours.capacite }}
-        </p>
-
-        <!-- Barre progression -->
-        <div class="w-full bg-gray-200 rounded-full h-2 mt-3">
-          <div
-            class="bg-green-500 h-2 rounded-full"
-            [style.width.%]="(cours.reserves / cours.capacite) * 100"
-          ></div>
+<div class="p-6 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+  
+  <!-- Notification Toast -->
+  @if (notification().show) {
+    <div class="fixed top-20 right-6 z-50 animate-slide-in">
+      <div class="rounded-lg shadow-lg p-4 min-w-[300px] backdrop-blur"
+           [class]="notification().type === 'success' ? 'bg-green-500 text-white' : 
+                    notification().type === 'error' ? 'bg-red-500 text-white' : 
+                    'bg-blue-500 text-white'">
+        <div class="flex items-center gap-3">
+          @if (notification().type === 'success') {
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+          }
+          @if (notification().type === 'error') {
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          }
+          <span>{{ notification().message }}</span>
         </div>
-
-        <!-- Bouton -->
-        <button
-          class="mt-4 w-full px-4 py-2 rounded-lg text-white transition"
-          [disabled]="cours.complet"
-          [ngClass]="cours.complet
-            ? 'bg-red-400 cursor-not-allowed'
-            : 'bg-blue-600 hover:bg-blue-700'"
-          (click)="reserver(cours.id)"
-        >
-          {{ cours.complet ? 'Complet' : 'Réserver' }}
-        </button>
-
       </div>
+    </div>
+  }
 
-    }
-
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-2">
+      📅 Planning des cours
+    </h1>
+    <p class="text-gray-600">Réservez votre place aux cours qui vous intéressent</p>
   </div>
+
+  <!-- Stats Dashboard -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-500 text-sm">Total cours</p>
+          <p class="text-2xl font-bold text-gray-800">{{ cours().length }}</p>
+        </div>
+        <div class="bg-blue-100 p-3 rounded-full">
+          <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-500 text-sm">Places disponibles</p>
+          <p class="text-2xl font-bold text-green-600">{{ totalPlacesDisponibles() }}</p>
+        </div>
+        <div class="bg-green-100 p-3 rounded-full">
+          <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-500 text-sm">Réservations</p>
+          <p class="text-2xl font-bold text-purple-600">{{ totalReservations() }}</p>
+        </div>
+        <div class="bg-purple-100 p-3 rounded-full">
+          <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-500 text-sm">Taux d'occupation</p>
+          <p class="text-2xl font-bold text-orange-600">{{ tauxOccupation() }}%</p>
+        </div>
+        <div class="bg-orange-100 p-3 rounded-full">
+          <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filtres -->
+  <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+    <div class="flex gap-4 flex-wrap items-center justify-between">
+      <div class="flex-1 min-w-[200px]">
+        <div class="relative">
+          <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <input
+            type="text"
+            placeholder="Rechercher un cours..."
+            class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            [(ngModel)]="searchText"
+          />
+        </div>
+      </div>
+      
+      <select
+        class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        [(ngModel)]="selectedNiveau">
+        <option value="tous">Tous les niveaux</option>
+        <option value="débutant">Débutant</option>
+        <option value="intermédiaire">Intermédiaire</option>
+        <option value="avancé">Avancé</option>
+      </select>
+      
+      <button
+        (click)="resetFilters()"
+        class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg transition">
+        Réinitialiser
+      </button>
+      
+      <button
+        (click)="exportPlanning()"
+        class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m-6 8h6"></path>
+        </svg>
+        Export
+      </button>
+    </div>
+  </div>
+
+  <!-- Prochains cours -->
+  @if (prochainsCours().length > 0) {
+    <div class="mb-8">
+      <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+        <span class="text-2xl">⭐</span>
+        Prochains cours disponibles
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        @for (cours of prochainsCours(); track cours.id) {
+          <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="font-bold text-blue-800">{{ cours.nom }}</p>
+                <p class="text-sm text-gray-600">{{ cours.horaire }}</p>
+                <p class="text-xs text-green-600 mt-1">{{ cours.placesRestantes }} places</p>
+              </div>
+              <div class="text-3xl">{{ cours.image }}</div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Grille des cours -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    @for (cours of coursAvecStatut(); track cours.id) {
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+        
+        <!-- En-tête avec image -->
+        <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-4 text-white">
+          <div class="flex items-center justify-between">
+            <div class="text-4xl">{{ cours.image }}</div>
+            <div class="bg-white/20 px-3 py-1 rounded-full text-sm">
+              {{ cours.niveau }}
+            </div>
+          </div>
+          <h3 class="text-xl font-bold mt-3">{{ cours.nom }}</h3>
+          <p class="text-blue-100 text-sm mt-1">{{ cours.coach }}</p>
+        </div>
+        
+        <!-- Corps -->
+        <div class="p-5">
+          <!-- Description -->
+          <p class="text-gray-600 text-sm mb-4">{{ cours.description }}</p>
+          
+          <!-- Horaire -->
+          <div class="flex items-center gap-2 text-gray-600 text-sm mb-3">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>{{ cours.horaire }}</span>
+            <span class="mx-2">•</span>
+            <span>{{ cours.duree }} min</span>
+          </div>
+          
+          <!-- Places -->
+          <div class="mb-3">
+            <div class="flex justify-between text-sm text-gray-600 mb-1">
+              <span>Réservations</span>
+              <span class="font-semibold">{{ cours.reserves }} / {{ cours.capacite }}</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+              <div
+                class="h-2 rounded-full transition-all duration-500"
+                [class]="getBarreColor(cours.pourcentage)"
+                [style.width.%]="cours.pourcentage"
+              ></div>
+            </div>
+          </div>
+          
+          <!-- Badge statut -->
+          @let status = getStatusBadge(cours.complet, cours.placesRestantes);
+          <div class="mb-4">
+            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold text-white {{ status.color }}">
+              {{ status.text }}
+            </span>
+          </div>
+          
+          <!-- Bouton -->
+          <button
+            class="w-full py-2.5 rounded-lg font-semibold transition-all transform hover:scale-105"
+            [disabled]="cours.complet"
+            [ngClass]="cours.complet
+              ? 'bg-gray-300 cursor-not-allowed text-gray-500'
+              : 'bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-md'"
+            (click)="reserver(cours.id)"
+          >
+            @if (!cours.complet) {
+              <span class="flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                Réserver
+              </span>
+            } @else {
+              <span class="flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                Complet
+              </span>
+            }
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Message si aucun cours -->
+  @if (coursAvecStatut().length === 0) {
+    <div class="text-center py-12">
+      <svg class="w-24 h-24 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      <p class="text-xl text-gray-500">Aucun cours trouvé</p>
+      <p class="text-gray-400">Essayez de modifier vos filtres</p>
+    </div>
+  }
 </div>
+
+<!-- Modal de réservation -->
+@if (showModal()) {
+  <div class="fixed inset-0 z-50 overflow-y-auto" (click)="showModal.set(false)">
+    <div class="fixed inset-0 bg-gradient-to-br from-black/70 to-black/50 backdrop-blur-md"></div>
+    
+    <div class="flex min-h-full items-center justify-center p-4" (click)="$event.stopPropagation()">
+      <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-md transform transition-all animate-slide-up">
+        
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-t-2xl p-6">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="text-3xl">{{ selectedCours()?.image }}</div>
+              <h3 class="text-xl font-bold text-white">
+                Réserver {{ selectedCours()?.nom }}
+              </h3>
+            </div>
+            <button (click)="showModal.set(false)" class="text-white/80 hover:text-white">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Corps -->
+        <div class="p-6">
+          <div class="mb-4 p-3 bg-blue-50 rounded-lg">
+            <p class="text-sm text-gray-600">Cours sélectionné</p>
+            <p class="font-semibold text-gray-800">{{ selectedCours()?.nom }}</p>
+            <p class="text-sm text-gray-600">{{ selectedCours()?.horaire }}</p>
+          </div>
+          
+          <label class="block text-sm font-semibold text-gray-700 mb-2">
+            Votre nom
+          </label>
+          <input
+            type="text"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            [(ngModel)]="membreNom"
+            placeholder="Entrez votre nom complet"
+          />
+          
+          <div class="mt-6 flex gap-3">
+            <button
+              (click)="confirmerReservation()"
+              class="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg transition font-semibold">
+              Confirmer
+            </button>
+            <button
+              (click)="showModal.set(false)"
+              class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 rounded-lg transition font-semibold">
+              Annuler
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Styles -->
+<style>
+  @keyframes slide-in {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slide-up {
+    from {
+      transform: translateY(30px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .animate-slide-in {
+    animation: slide-in 0.3s ease-out;
+  }
+  
+  .animate-slide-up {
+    animation: slide-up 0.3s ease-out;
+  }
+  
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+</style>

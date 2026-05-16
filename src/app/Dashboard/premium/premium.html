@@ -5,25 +5,7 @@
   </h2>
 
   <div class="h-[400px] bg-white rounded-xl shadow p-4 relative">
-
-    @defer (on viewport) {
-
-      <canvas #chartCanvas class="absolute inset-0"></canvas>
-
-    } @placeholder {
-
-      <div class="text-gray-500 text-center">
-        Faites défiler pour charger les statistiques...
-      </div>
-
-    } @loading {
-
-      <div class="text-blue-500 text-center">
-        Chargement du graphique...
-      </div>
-
-    }
-
+    <canvas #chartCanvas class="w-full h-full"></canvas>
   </div>
 
 </div>

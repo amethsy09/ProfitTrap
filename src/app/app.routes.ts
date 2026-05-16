@@ -2,9 +2,10 @@ import { Routes } from '@angular/router';
 import { Dashboard } from './Dashboard/dashboard/dashboard';
 import { Adherant } from './Dashboard/adherant/adherant';
 import { App } from './app';
-import { PlannignReservation } from './Dashboard/plannign-reservation/plannign-reservation';
+import { PlanningReservation } from './Dashboard/plannign-reservation/plannign-reservation';
 import { InscriptionComponent } from './Dashboard/inscription/inscription';
 import { PremiumComponent } from './Dashboard/premium/premium';
+import { NutritionComponent } from './Dashboard/nutrition/nutrition';
 
 export const routes: Routes = [
  
@@ -18,7 +19,7 @@ component:Adherant
 },
 {
 path:'planning-reservation',
-component:PlannignReservation
+component:PlanningReservation
 },
 {
 path:'inscription',
@@ -27,6 +28,10 @@ component:InscriptionComponent
 {
 path:'premium',
 component:PremiumComponent
+},
+{
+path:'nutrition',
+component:NutritionComponent
 },
 {
 path:'',
