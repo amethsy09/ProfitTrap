@@ -1,0 +1,49 @@
+/* Styles supplémentaires pour le formulaire */
+input.ng-invalid.ng-touched {
+  border-color: #ef4444;
+}
+
+input:focus {
+  outline: none;
+}
+
+/* Animation des messages d'erreur */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bg-red-50 {
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Style pour les champs désactivés */
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Scrollbar personnalisée */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

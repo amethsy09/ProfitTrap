@@ -6,6 +6,7 @@ import { PlanningReservation } from './Dashboard/plannign-reservation/plannign-r
 import { InscriptionComponent } from './Dashboard/inscription/inscription';
 import { PremiumComponent } from './Dashboard/premium/premium';
 import { NutritionComponent } from './Dashboard/nutrition/nutrition';
+import { HealthComponent } from './Dashboard/health/health';
 
 export const routes: Routes = [
  
@@ -32,6 +33,10 @@ component:PremiumComponent
 {
 path:'nutrition',
 component:NutritionComponent
+},
+{
+path:'health',
+component:HealthComponent
 },
 {
 path:'',

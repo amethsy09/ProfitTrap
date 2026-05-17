@@ -1,0 +1,5 @@
+/* health-chart.component.css */
+canvas {
+  max-height: 300px;
+  width: 100%;
+}

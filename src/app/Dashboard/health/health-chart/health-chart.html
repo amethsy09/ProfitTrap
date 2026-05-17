@@ -1,0 +1,45 @@
+<div class="space-y-6">
+  <!-- Graphique de poids -->
+  <div>
+    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+      <span>📊</span>
+      Évolution du poids
+    </h3>
+    <div class="h-[300px]">
+      <canvas #weightChart></canvas>
+    </div>
+  </div>
+
+  <!-- Graphique IMC -->
+  <div>
+    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+      <span>📈</span>
+      Évolution de l'IMC
+    </h3>
+    <div class="h-[300px]">
+      <canvas #bmiChart></canvas>
+    </div>
+  </div>
+
+  <!-- Mini stats -->
+  @if (stats()) {
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div class="bg-blue-50 rounded-lg p-3 text-center">
+        <div class="text-xs text-blue-600">Poids min</div>
+        <div class="text-lg font-bold text-blue-800">{{ stats()?.minWeight }} kg</div>
+      </div>
+      <div class="bg-blue-50 rounded-lg p-3 text-center">
+        <div class="text-xs text-blue-600">Poids max</div>
+        <div class="text-lg font-bold text-blue-800">{{ stats()?.maxWeight }} kg</div>
+      </div>
+      <div class="bg-purple-50 rounded-lg p-3 text-center">
+        <div class="text-xs text-purple-600">IMC min</div>
+        <div class="text-lg font-bold text-purple-800">{{ stats()?.minBMI }}</div>
+      </div>
+      <div class="bg-purple-50 rounded-lg p-3 text-center">
+        <div class="text-xs text-purple-600">IMC max</div>
+        <div class="text-lg font-bold text-purple-800">{{ stats()?.maxBMI }}</div>
+      </div>
+    </div>
+  }
+</div>
