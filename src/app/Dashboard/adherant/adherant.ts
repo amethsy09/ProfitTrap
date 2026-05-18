@@ -154,8 +154,8 @@ export class Adherant {
       errors.telephone = 'Téléphone invalide (ex: +221 78 123 45 67)';
     } else {
       // Vérifier unicité
-      const phoneExists = this.adherentsSignal().some(a => 
-        a.telephone.replace(/\s/g, '') === cleanPhone && 
+      const phoneExists = this.adherentsSignal().some(a =>
+        a.telephone.replace(/\s/g, '') === cleanPhone &&
         a.id !== this.editingAdherent()?.id
       );
       if (phoneExists) {

@@ -7,6 +7,7 @@ import { InscriptionComponent } from './Dashboard/inscription/inscription';
 import { PremiumComponent } from './Dashboard/premium/premium';
 import { NutritionComponent } from './Dashboard/nutrition/nutrition';
 import { HealthComponent } from './Dashboard/health/health';
+import { ShopComponent } from './Dashboard/shop/shop';
 
 export const routes: Routes = [
  
@@ -37,6 +38,10 @@ component:NutritionComponent
 {
 path:'health',
 component:HealthComponent
+},
+{
+    path:'shop',
+    component:ShopComponent
 },
 {
 path:'',
