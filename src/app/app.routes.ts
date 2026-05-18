@@ -8,6 +8,7 @@ import { PremiumComponent } from './Dashboard/premium/premium';
 import { NutritionComponent } from './Dashboard/nutrition/nutrition';
 import { HealthComponent } from './Dashboard/health/health';
 import { ShopComponent } from './Dashboard/shop/shop';
+import { CommunityComponent } from './Dashboard/community/community';
 
 export const routes: Routes = [
  
@@ -42,6 +43,10 @@ component:HealthComponent
 {
     path:'shop',
     component:ShopComponent
+},
+{
+    path:'community',
+    component:CommunityComponent
 },
 {
 path:'',
